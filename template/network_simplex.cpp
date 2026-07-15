@@ -58,8 +58,9 @@ namespace _flow{
 		flow(){
 			init();
 		}
-		flow(int n){
+		flow(int _n){
 			init();
+			n = _n;
 			bg.resize(n, -1);
 			vis.resize(n);
 			fa.resize(n, -1);
@@ -119,8 +120,8 @@ namespace _flow{
 			}
 			cyc.pb(id);
 
-			for(int id:cyc){
-				e[id].w -= mnf, e[id ^ 1].w += mnf, cost += mnf * e[id].c;
+			for(int eid:cyc){
+				e[eid].w -= mnf, e[eid ^ 1].w += mnf, cost += mnf * e[eid].c;
 			}
 			cyc.clear();
 
