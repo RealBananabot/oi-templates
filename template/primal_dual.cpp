@@ -68,7 +68,7 @@ namespace _flow{
 			G.resize(n);
 		}
 		mcmf(int _n = 0){
-			mcmf(_n + 2, _n, _n);
+			mcmf(_n + 2, _n, _n + 1);
 		}
 		void link(int u, int v, Cap w, Cost c){
 			G[u].pb(edge{v, w, c, int(G[v].size())});
