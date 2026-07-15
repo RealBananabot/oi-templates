@@ -35,7 +35,7 @@ namespace _flow{
 	// maxcost: 单位流量带来的最大费用变化
 	// inf: 总流量和费用的最大绝对值
 	constexpr i64 maxcap = 1e18;
-	constexpr i64 maxcost = 1e9, inf = 1e18;
+	constexpr i64 maxcost = 1, inf = 1e18;
 
 	template<typename Cap, typename Cost> struct flow{
 		struct edge{
