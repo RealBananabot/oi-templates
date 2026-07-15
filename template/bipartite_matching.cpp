@@ -9,29 +9,41 @@ using i64 = long long;
 using vi = vector<int>;
 using pi = pair<int, int>;
 
-template<typename T0, typename T1> bool chmin(T0 &x, const T1 &y){
+bool chmin(auto &x, const auto &y){
 	if(y < x){x = y; return true;} return false;
 }
-template<typename T0, typename T1> bool chmax(T0 &x, const T1 &y){
+bool chmax(auto &x, const auto &y){
 	if(x < y){x = y; return true;} return false;
 }
 
-template<typename T> void debug(char *s, T x){
-	cerr << s <<" = "<< x <<endl;
+ostream& operator << (ostream &os, const auto &v) 
+	requires requires { v.begin(); } && (!requires { v.substr(); }) {
+	os << "[";
+	for (int f = 0; const auto& x : v) os << (f++ ? ", " : "") << x;
+	return os << "]";
 }
-template<typename T, typename ...Ar> void debug(char *s, T x, Ar... y){
-	int dep = 0;
-	while(!(*s == ',' && dep == 0)){
-		if(*s == '(') dep++;
-		if(*s == ')') dep--;
-		cerr << *s++;
-	}
-	cerr <<" = "<< x <<",";
-	debug(s + 1, y...);
+
+template<typename ...Ar> void debug(char *s, Ar... x){
+	auto f = [&](auto y){
+		int dep = 0;
+		while(*s && !(*s == ',' && dep == 0)){
+			if(*s == '(') dep++;
+			if(*s == ')') dep--;
+			cerr << *s++;
+		}
+		cerr <<" = "<< y;
+		if(*s == ','){
+			cerr << *s ++;
+		} else{
+			cerr << endl;
+		}
+	};
+
+	(f(x), ...);
 }
 #define gdb(...) debug((char*)#__VA_ARGS__, __VA_ARGS__)
 
-int solve(int n, int m, const vector<vi> &G){
+pair<int, vi> bipartite_matching(int n, int m, const vector<vi> &G){
 	vi vis(n), dis(n), match(n, -1), pre(m, -1);
 	
 	auto bfs = [&]()->bool {
@@ -83,6 +95,6 @@ int solve(int n, int m, const vector<vi> &G){
 			}
 		}
 	}
-	return res;
+	return {res, match};
 }
 
